@@ -6,6 +6,9 @@ var shell        = require('shelljs'),
     mspec        = require('./mobile_spec');
 
 module.exports = function(output, sha, devices, entry_point, callback) {
+    function log(msg) {
+        console.log('[ANDROID] ' + msg + ' (sha: ' + sha.substr(0,7) + ')');
+    }
       try {
           log('Modifying Cordova application.');
 
@@ -13,28 +16,27 @@ module.exports = function(output, sha, devices, entry_point, callback) {
           if (!fs.existsSync(output)) {
               throw new Error('create must have failed as output path does not exist.');
           }
-          mspec(output,sha,devices,entry_point, function(err){
+          var mspec_out = path.join(output, 'assets', 'www');
+          mspec(mspec_out,sha,devices,entry_point, function(err){
               if(err) {
                   error_writer('android', sha, 'Error  modifying mobile spec application.', '');
                   callback(true);
               } else {
-       
-                        // add the sha to the junit reporter
-                        var tempJasmine = path.join(output, 'assets', 'www', 'jasmine-jsreporter.js');
-                        if (fs.existsSync(tempJasmine)) {
-                            fs.writeFileSync(tempJasmine, "var library_sha = '" + sha + "';\n" + fs.readFileSync(tempJasmine, 'utf-8'), 'utf-8');
-                        }
+                  // add the sha to the junit reporter
+                  var tempJasmine = path.join(output, 'assets', 'www', 'jasmine-jsreporter.js');
+                  if (fs.existsSync(tempJasmine)) {
+                      fs.writeFileSync(tempJasmine, "var library_sha = '" + sha + "';\n" + fs.readFileSync(tempJasmine, 'utf-8'), 'utf-8');
+                  }
 
-                        // modify start page
-                        // modify the config.xml
-                        var configFile = path.join(output, 'res', 'xml', 'config.xml');
-                        fs.writeFileSync(configFile, fs.readFileSync(configFile, 'utf-8').replace(/<content\s*src=".*"/gi, '<content src="' +entry_point + '"'), 'utf-8');
-
-                    } catch (e) {
-                        error_writer('android', sha, 'Exception thrown modifying Android mobile spec application.', e.message);
-                        callback(true);
-                        return;
-                    }
-             }
+                  // modify start page in the config.xml
+                  var configFile = path.join(output, 'res', 'xml', 'config.xml');
+                  fs.writeFileSync(configFile, fs.readFileSync(configFile, 'utf-8').replace(/<content\s*src=".*"/gi, '<content src="' +entry_point + '"'), 'utf-8');
+              }
+          });
+     } catch (e) {
+         error_writer('android', sha, 'Exception thrown modifying Android mobile spec application.', e.message);
+         callback(true);
+         return;
+     }
 }
 

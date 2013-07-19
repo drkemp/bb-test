@@ -7,8 +7,6 @@ var shell        = require('shelljs'),
 var keychain_location = config.ios.keychainLocation;
 var keychain_password = config.ios.keychainPassword;
 
-var ios_lib = libraries.paths['cordova-ios'];
-var create = path.join(ios_lib, 'bin', 'create');
 
 module.exports = function(output, sha, devices, entry_point, callback) {
     function log(msg) {
