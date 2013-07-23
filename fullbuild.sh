@@ -3,6 +3,10 @@
 # move up to the sandbox
 
 cd ..
+echo ==== Cleaning up ====
+rm -rf cordova-*
+rm -rf mobilespec
+
 echo ==== Installing coho ====
 git clone https://github.com/apache/cordova-coho.git
 cd cordova-coho
@@ -20,7 +24,9 @@ echo ==== Creating mobilespec ====
 cd mobilespec
 cp ../medic/cordova_config.json .cordova/config.json
 ../cordova-cli/bin/cordova platform add android ios
-../cordova-cli/bin/cordova plugin add ../cordova-mobile-spec/dependencies-plugin
+echo ==== Adding plugins to mobilespec ====
+../cordova-cli/bin/cordova -d plugin add ../cordova-mobile-spec/dependencies-plugin
+echo ==== Modifying www for mobilespec ====
 rm -r www
 ln -s ../cordova-mobile-spec www
 
@@ -36,9 +42,9 @@ echo ==== Preparing mobilespec ====
 ../cordova-cli/bin/cordova prepare
 
 echo ==== patching for test ====
-cd medic 
+cd ../medic 
 node build.js
-cd ..
+cd ../mobilespec
 
 echo ==== Building for android ==== 
 ../cordova-cli/bin/cordova build android
@@ -50,6 +56,6 @@ echo ==== Deploying to android ====
 ../cordova-cli/bin/cordova run android
 
 echo ==== Deploying to ios ==== 
-../cordova-cli/bin/cordova emulate ios
+# ../cordova-cli/bin/cordova emulate ios
 
 
