@@ -127,8 +127,8 @@ if(TEST_OK) {
 }
 trythis(MSPEC_DIR,'../cordova-cli/bin/cordova platform add android ios',BRANCH,'Cli','platform add');
 //dirty hack
-var cmd = 'patch '+path.join(TEST_DIR,'cordova-cli','node_modules','plugman','src','install.js')+' -i '+path.join(TOOL_DIR,'install.patch');
-shell.exec(cmd);
+//var cmd = 'patch '+path.join(TEST_DIR,'cordova-cli','node_modules','plugman','src','install.js')+' -i '+path.join(TOOL_DIR,'install.patch');
+//shell.exec(cmd);
 
 trythis(MSPEC_DIR,'../cordova-cli/bin/cordova -d plugin add ../cordova-mobile-spec/dependencies-plugin',BRANCH,'Cli','plugin add');
 
