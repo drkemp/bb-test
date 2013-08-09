@@ -70,6 +70,7 @@ function trythis(dir, cmd, sha, platform, operation) {
       TEST_OK=false;
     }
     shell.popd();
+    console.log("% complete",operation);
   } else {
     shell.echo('Skipping due to previous errors: '+platform+': '+operation);
   }
