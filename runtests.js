@@ -11,7 +11,7 @@ var argv = require('optimist').boolean(['android','ios','js']).argv;
 // this assumes that you start it in the sandbox
 
 var TEST_DIR=process.cwd();
-var BRANCH='HEAD';
+var BRANCH='master';
 var TOOL_DIR=path.join(TEST_DIR,'medic');
 var MSPEC_DIR=path.join(TEST_DIR,'mobilespec');
 var TEST_OK=true;
@@ -96,25 +96,24 @@ if (ulimit && ulimit.output.trim() < 2000) {
       shell.exec('/bin/bash -c \'ulimit -S -n 4096; exec "' + process.argv[0] + '" "' + process.argv.slice(1).join('" "') + '" --ulimit\'');
       return;
 }
+
 console.log('runtests invoked with: %j',argv);
-console.log('runtests invoked with args: %j',argv._);
-shell.echo('runtests run with Android:'+argv.android+' iOS:'+argv.ios+' JS:'+argv.js);
+shell.echo('runtests run with Android:'+argv.android+' iOS:'+argv.ios+' JS:'+argv.js+' branch:'+argv.branch);
 var build_android=false;
 var build_ios=false;
 var build_js=false;
-if(argv.android){
-   build_android=true;
-   shell.echo('Building Android');
-}
+
+if(argv.android) build_android=true;
 if(argv.ios) build_ios=true;
 if(argv.js) build_js=true;
+if(argv.branch) BRANCH=argv.branch;
 
 cleanSandbox();
 
 trythis(TEST_DIR, 'git clone https://github.com/apache/cordova-coho.git',BRANCH,'coho','git clone');
 trythis(path.join(TEST_DIR,'cordova-coho'),'npm install', BRANCH, 'npm', 'coho npm install');
 
-trythis(TEST_DIR,'./cordova-coho/coho repo-clone -r plugins -r mobile-spec -r android -r ios -r cli -r js',BRANCH,'coho','loading repos');
+trythis(TEST_DIR,'./cordova-coho/coho repo-update -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
 if(TEST_OK) {
   success('coho',BRANCH,'repo clone','ok');
 }
