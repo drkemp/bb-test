@@ -190,5 +190,8 @@ if(build_ios) {
 
 if(TEST_OK){
    success('Testrun',BRANCH,'complete','ok');
+   process.exit(0);
+} else {
+   process.exit(1);
 }
 
