@@ -97,6 +97,7 @@ if (ulimit && ulimit.output.trim() < 2000) {
       return;
 }
 
+console.log('current path='+TEST_DIR+", config=%j",config);
 console.log('runtests invoked with: %j',argv);
 shell.echo('runtests run with Android:'+argv.android+' iOS:'+argv.ios+' JS:'+argv.js+' branch:'+argv.branch);
 var build_android=false;
@@ -173,7 +174,7 @@ trythis(MSPEC_DIR,'../cordova-cli/bin/cordova prepare',BRANCH,'Cli','prepare');
 if(build_android) {
     shell.echo('++++ calling android prepare');
     var output_location = path.join(MSPEC_DIR,'platforms','android');
-    android(output_location, BRANCH,'', config.app.entry, function(err){
+    android(output_location, BRANCH,'', config.app.entry, config.couchdb.host, function(err){
        shell.echo('Android test prepare failed')
     });
     shell.echo('++++ back from android prepare');
