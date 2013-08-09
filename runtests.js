@@ -97,6 +97,7 @@ if (ulimit && ulimit.output.trim() < 2000) {
       return;
 }
 console.log('runtests invoked with: %j',argv);
+console.log('runtests invoked with args: %j',argv._);
 shell.echo('runtests run with Android:'+argv.android+' iOS:'+argv.ios+' JS:'+argv.js);
 var build_android=false;
 var build_ios=false;
