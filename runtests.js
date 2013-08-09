@@ -113,9 +113,13 @@ cleanSandbox();
 trythis(TEST_DIR, 'git clone https://github.com/apache/cordova-coho.git',BRANCH,'coho','git clone');
 trythis(path.join(TEST_DIR,'cordova-coho'),'npm install', BRANCH, 'npm', 'coho npm install');
 
-trythis(TEST_DIR,'./cordova-coho/coho repo-update -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
+trythis(TEST_DIR,'./cordova-coho/coho repo-clone -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
 if(TEST_OK) {
   success('coho',BRANCH,'repo clone','ok');
+}
+trythis(TEST_DIR,'./cordova-coho/coho repo-update -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
+if(TEST_OK) {
+  success('coho',BRANCH,'repo update','ok');
 }
 trythis(path.join(TEST_DIR,'cordova-cli'), 'npm install',BRANCH,'cli','cli npm install');
 
