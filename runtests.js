@@ -172,7 +172,7 @@ if(build_js) {
 trythis(MSPEC_DIR,'../cordova-cli/bin/cordova prepare',BRANCH,'Cli','prepare');
 
 // call the builder for the requested platform
-if(build_android) {
+if(TEST_OK && build_android) {
     shell.echo('++++ calling android prepare');
     var output_location = path.join(MSPEC_DIR,'platforms','android');
     android(output_location, BRANCH,'', config.app.entry, config.couchdb.host, function(err){
@@ -183,7 +183,7 @@ if(build_android) {
     trythis(MSPEC_DIR, '../cordova-cli/bin/cordova compile android',BRANCH,'Cli','build android');
     trythis(MSPEC_DIR, './platforms/android/cordova/run --device',BRANCH,'Cli','deploy android');
 }
-if(build_ios) {
+if(TEST_OK && build_ios) {
      trythis(MSPEC_DIR, '../cordova-cli/bin/cordova compile ios', BRANCH,'Cli','build ios');
      trythis(MSPEC_DIR, './platforms/ios/cordova/run --device',BRANCH,'Cli','deploy ios');
 }
@@ -192,6 +192,7 @@ if(TEST_OK){
    success('Testrun',BRANCH,'complete','ok');
    process.exit(0);
 } else {
+   console.log('Failure Exit with code 1');
    process.exit(1);
 }
 
