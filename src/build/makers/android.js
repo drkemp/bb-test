@@ -36,7 +36,7 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
                   var configFile = path.join(output, 'res', 'xml', 'config.xml');
                   fs.writeFileSync(configFile, fs.readFileSync(configFile, 'utf-8').replace(/<content\s*src=".*"/gi, '<content src="' +entry_point + '"'), 'utf-8');
                   // make sure the couch db server is whitelisted
-                  fs.writeFileSync(configFile, fs.readFileSync(configFile, 'utf-8').replace('<access origin="http://audio.ibeat.org"..>','<access origin="http://audio.ibeat.org" /><access origin="'+couchdb_host+' />', 'utf-8'));
+                  fs.writeFileSync(configFile, fs.readFileSync(configFile, 'utf-8').replace('<access origin="http://audio.ibeat.org" */>','<access origin="http://audio.ibeat.org" /><access origin="'+couchdb_host+' />', 'utf-8'));
               }
           });
      } catch (e) {
