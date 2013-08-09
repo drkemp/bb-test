@@ -6,7 +6,7 @@ var couch = require('./src/couchdb/interface');
 var config = require('./config');
 var android  = require('./src/build/makers/android');
 var ios  = require('./src/build/makers/ios');
-var argv = require('optimist').argv;
+var argv = require('optimist').boolean(['android','ios',js']).argv;
 
 // this assumes that you start it in the sandbox
 
