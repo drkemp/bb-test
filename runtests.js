@@ -96,7 +96,7 @@ if (ulimit && ulimit.output.trim() < 2000) {
       shell.exec('/bin/bash -c \'ulimit -S -n 4096; exec "' + process.argv[0] + '" "' + process.argv.slice(1).join('" "') + '" --ulimit\'');
       return;
 }
-shell.echo('runtests invoked with:'+argv);
+console.log('runtests invoked with: %j',argv);
 shell.echo('runtests run with Android:'+argv.android+' iOS:'+argv.ios+' JS:'+argv.js);
 var build_android=false;
 var build_ios=false;
