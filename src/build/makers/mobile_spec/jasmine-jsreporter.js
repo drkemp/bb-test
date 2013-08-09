@@ -126,7 +126,7 @@ limitations under the License.
             var xhr = new XMLHttpRequest();
             var doc_id = [json.platform, library_sha, json.version, json.model].map(encodeURIComponent).join('__');
             // TODO: expose the db in this url for customization
-            var doc_url = this.server + '/mytestdb/' + doc_id;
+            var doc_url = this.server + '/mobilespec_results/' + doc_id;
             xhr.open("PUT", doc_url, true);
             xhr.onreadystatechange=function() {
                 console.log('onreadystatechange');
