@@ -102,7 +102,7 @@ var build_ios=false;
 var build_js=false;
 if(argv.android){
    build_android=true;
-   shell.echo("Building Android');
+   shell.echo('Building Android');
 }
 if(argv.ios) build_ios=true;
 if(argv.js) build_js=true;
