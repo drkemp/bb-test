@@ -15,6 +15,14 @@ var BRANCH='master';
 var TOOL_DIR=path.join(TEST_DIR,'medic');
 var MSPEC_DIR=path.join(TEST_DIR,'mobilespec');
 var TEST_OK=true;
+var last_error="";
+
+
+// when things end, I need to ensure that it exits with the right
+// return code.
+process.once('exit', function () {
+    if(!TEST_OK) process.exit(1);
+});
 
 //records a success in the couchdb
 function success(platform,sha,component,details) {
@@ -68,6 +76,7 @@ function trythis(dir, cmd, sha, platform, operation) {
     if(cmdobj.code!=0){
       error(platform, 'HEAD', 'Error in '+operation, cmdobj.output)
       TEST_OK=false;
+      last_error=platform+': '+operation;
     }
     shell.popd();
     console.log("% complete",operation);
@@ -76,7 +85,7 @@ function trythis(dir, cmd, sha, platform, operation) {
   }
 }
 
-// clear out the test snadbox prior to a test run
+// clear out the test sandbox prior to a test run
 function cleanSandbox() {
    shell.cd(TEST_DIR);
    shell.echo(' ==== Cleaning up ====');
@@ -94,7 +103,9 @@ function writefile(target,text){
 // ShellJS opens a lot of file handles, and the default on OS X is too small.
 var ulimit = shell.exec('ulimit -S -n');
 if (ulimit && ulimit.output.trim() < 2000) {
-      shell.exec('/bin/bash -c \'ulimit -S -n 4096; exec "' + process.argv[0] + '" "' + process.argv.slice(1).join('" "') + '" --ulimit\'');
+      var cmdobj=shell.exec('/bin/bash -c \'ulimit -S -n 4096; exec "' + process.argv[0] + '" "' + process.argv.slice(1).join('" "') + '" --ulimit\'');
+      if(cmdobj.code !=0) TEST_OK=false; 
+      console.log("Sub-command ended with: "+cmdobj.code);
       return;
 }
 
@@ -190,9 +201,9 @@ if(TEST_OK && build_ios) {
 
 if(TEST_OK){
    success('Testrun',BRANCH,'complete','ok');
-   process.exit(0);
+   console.log('Testrun complete without error');
 } else {
-   console.log('Failure Exit with code 1');
-   process.exit(1);
+   error('Testrun',BRANCH,'failed',last_error);
+   console.error('Failure Exit with code 1');
 }
 
