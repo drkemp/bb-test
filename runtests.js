@@ -196,7 +196,8 @@ if(TEST_OK && build_android) {
 }
 if(TEST_OK && build_ios) {
      trythis(MSPEC_DIR, '../cordova-cli/bin/cordova compile ios', BRANCH,'Cli','build ios');
-     trythis(MSPEC_DIR, './platforms/ios/cordova/run --device',BRANCH,'Cli','deploy ios');
+     //trythis(MSPEC_DIR, './platforms/ios/cordova/run --device',BRANCH,'Cli','deploy ios');
+     trythis(MSPEC_DIR, './platforms/ios/cordova/run --target ipad',BRANCH,'Cli','deploy ios');
 }
 
 if(TEST_OK){
