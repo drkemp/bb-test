@@ -92,8 +92,12 @@ db.prototype = {
                                             }, function(argh, r, bodee) {
                                                 if (argh) callback(argh);
                                                 else {
-                                                    if (r.statusCode == 201) callback(false, bodee);
-                                                    else callback(true, r.statusCode);
+                                                    if(r){
+                                                        if (r.statusCode == 201) callback(false, bodee);
+                                                        else callback(true, r.statusCode);
+                                                    } else {
+                                                        callback(false);
+                                                    }
                                                 }
                                             });
                                         } else callback(true, r.statusCode);
