@@ -156,7 +156,14 @@ if(TEST_OK) {
   }\
 }');
 }
-trythis(MSPEC_DIR,'../cordova-cli/bin/cordova platform add android ios',BRANCH,'Cli','platform add');
+
+if(TEST_OK && build_android) {
+    trythis(MSPEC_DIR,'../cordova-cli/bin/cordova platform add android',BRANCH,'Cli','platform add');
+}
+
+if(TEST_OK && build_ios) {
+    trythis(MSPEC_DIR,'../cordova-cli/bin/cordova platform add ios',BRANCH,'Cli','platform add');
+}
 
 trythis(MSPEC_DIR,'../cordova-cli/bin/cordova -d plugin add ../cordova-mobile-spec/dependencies-plugin',BRANCH,'Cli','plugin add');
 
