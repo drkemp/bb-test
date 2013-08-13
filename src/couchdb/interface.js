@@ -96,11 +96,11 @@ db.prototype = {
                                                         if (r.statusCode == 201) callback(false, bodee);
                                                         else callback(true, r.statusCode);
                                                     } else {
-                                                        callback(false);
+                                                        callback(true,"URL failed?");
                                                     }
                                                 }
                                             });
-                                        } else callback(true, r.statusCode);
+                                        } else callback(true, res.statusCode);
                                     }
                                 });
                             } else callback(true, resp.statusCode);
