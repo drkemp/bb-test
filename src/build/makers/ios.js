@@ -77,7 +77,7 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
                             });
                     }
                 }
-            }
+            });
         }
     }
 }
