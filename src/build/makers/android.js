@@ -2,6 +2,7 @@ var shell        = require('shelljs'),
     path         = require('path'),
     error_writer = require('./error_writer'),
     n            = require('ncallbacks'),
+    deploy       = require('./android/deploy'),
     fs           = require('fs'),
     mspec        = require('./mobile_spec');
 
@@ -44,5 +45,34 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
          callback(true);
          return;
      }
+                    // compile
+                    log('Compiling.');
+                    var ant = 'cd ' + output + ' && ant clean && ant debug';
+                    shell.exec(ant, {silent:true,async:true},function(code, compile_output) {
+                        if (code > 0) {
+                            error_writer('android', sha, 'Compilation error', compile_output);
+                            callback(true);
+                        } else {
+                            var binary_path = path.join(output, 'bin', 'cordovaExample-debug.apk');
+                            var package = 'org.apache.cordova.example';
+                            if (devices) {
+                                // already have a specific set of devices to deploy to
+                                deploy(sha, devices, binary_path, package, callback);
+                            } else {
+                                // get list of connected devices
+                                scan(function(err, devices) {
+                                    if (err) {
+                                        // Could not obtain device list...
+                                        var error_message = devices;
+                                        log(error_message);
+                                        callback(true);
+                                    } else {
+                                        deploy(sha, devices, binary_path, package, callback);
+                                    }
+                                });
+                            }
+                        }
+                    });
+
 }
 
