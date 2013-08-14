@@ -181,8 +181,8 @@ if(build_js) {
     if(TEST_OK){
        success('cordova-js',BRANCH,'build','ok');
        shell.pushd(MSPEC_DIR);
-       shell.cp('-f', '../cordova-js/pkg/cordova.ios.js','platforms/ios/www/cordova.js');
-       shell.cp('-f', '../cordova-js/pkg/cordova.android.js','platforms/android/assets/www/cordova.js');
+       if(build_ios) shell.cp('-f', '../cordova-js/pkg/cordova.ios.js','platforms/ios/www/cordova.js');
+       if(build_android) shell.cp('-f', '../cordova-js/pkg/cordova.android.js','platforms/android/assets/www/cordova.js');
        shell.popd();
     }
 }
