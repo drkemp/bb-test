@@ -3,6 +3,7 @@ var shell        = require('shelljs'),
     error_writer = require('./error_writer'),
     n            = require('ncallbacks'),
     deploy       = require('./android/deploy'),
+    scan         = require('./android/devices'),
     fs           = require('fs'),
     mspec        = require('./mobile_spec');
 
