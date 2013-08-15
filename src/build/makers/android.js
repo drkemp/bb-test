@@ -46,6 +46,7 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
          callback(true);
          return;
      }
+     var pkgname= 'mobilespec';
                     // compile
                     log('Compiling.');
                     var ant = 'cd ' + output + ' && ant clean && ant debug';
@@ -55,8 +56,8 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
                             error_writer('android', sha, 'Compilation error', compile_output);
                             callback(true);
                         } else {
-                            var binary_path = path.join(output, 'bin', 'cordovaExample-debug.apk');
-                            var package = 'org.apache.cordova.example';
+                            var binary_path = path.join(output, 'bin', pkgname+'-debug.apk');
+                            var package = 'org.apache.'+pkgname;
                             if (devices) {
                                 // already have a specific set of devices to deploy to
                                 log('deploying to provided devices:'+devices);

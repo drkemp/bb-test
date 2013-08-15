@@ -48,6 +48,7 @@ log('start component='+component);
                     cmd = 'adb -s ' + d + ' install -r ' + path;
                     var install = shell.exec(cmd, {silent:true,async:true},function(code, install_output) {
                         if (code > 0) {
+log('cmd = '+cmd);
                             log('Error installing on device ' + d);
                             end();
                         } else {
