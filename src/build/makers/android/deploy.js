@@ -26,6 +26,11 @@ module.exports = function deploy(sha, devices, path, id, callback) {
         log('No Android devices connected. Aborting.');
         callback();
     }
+    var activity='.mobilespec';
+    var package='org.apache.mobilespec';
+    var component = package+'/'+activity;
+log('project id='+id);
+log('start component='+component);
     var count = 0;
     if (devices === undefined || !devices) done();
     else {
@@ -47,7 +52,7 @@ module.exports = function deploy(sha, devices, path, id, callback) {
                             end();
                         } else {
                             log('Running on device ' + d);
-                            cmd = 'adb -s ' + d + ' shell am start -n ' + id + '/' + id + '.cordovaExample';
+                            cmd = 'adb -s ' + d + ' shell am start -n ' +component; // id + '/' + id + '.cordovaExample';
                             var deploy = shell.exec(cmd, {silent:true,async:true},function(code, run_output) {
                                 if (code > 0) {
                                     log('Error launching mobile-spec on device ' + d + ', continuing.');
