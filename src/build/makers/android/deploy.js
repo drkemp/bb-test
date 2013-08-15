@@ -56,7 +56,9 @@ log('start component='+component);
                             var deploy = shell.exec(cmd, {silent:true,async:true},function(code, run_output) {
                                 if (code > 0) {
                                     log('Error launching mobile-spec on device ' + d + ', continuing.');
-                                    end();
+log('cmd = '+cmd);
+log('code= '+code);
+                                     end();
                                 } else {
                                     log('Mobile-spec launched on device ' + d);
                                     // Clear out logcat buffer for specific device
