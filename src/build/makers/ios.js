@@ -19,9 +19,10 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
         return;
     } else {
         // unlock the chain
+       log('setting up keychain');
         var security = shell.exec('security default-keychain -s ' + keychain_location + ' && security unlock-keychain -p ' + keychain_password + ' ' + keychain_location, {silent:true});
         if (security.code > 0) {
-            log('security failed');
+            log('keychain setup failed');
             error_writer('ios', sha, 'Could not unlock keychain.', security.output);
             callback(true);
         } else {
