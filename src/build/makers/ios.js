@@ -21,6 +21,7 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
         // unlock the chain
         var security = shell.exec('security default-keychain -s ' + keychain_location + ' && security unlock-keychain -p ' + keychain_password + ' ' + keychain_location, {silent:true});
         if (security.code > 0) {
+            log('security failed');
             error_writer('ios', sha, 'Could not unlock keychain.', security.output);
             callback(true);
         } else {
@@ -28,9 +29,11 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
             log('./bin/create\'ing.');
             shell.exec(create + ' ' + output + ' org.apache.cordova.example cordovaExample', {silent:true, async:true}, function(code, ootput) {
                 if (code > 0) {
+                    log('create failed');
                     error_writer('ios', sha, './bin/create error', ootput);
                     callback(true);
                 } else {
+                    log('starting iOS prepare');
                     try {
                         var projectWww = path.join(output, 'www');
                         // drop the iOS library SHA into the junit reporter

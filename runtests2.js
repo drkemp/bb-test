@@ -121,22 +121,22 @@ if(argv.ios) build_ios=true;
 if(argv.js) build_js=true;
 if(argv.branch) BRANCH=argv.branch;
 
-cleanSandbox();
+//cleanSandbox();
 
-trythis(TEST_DIR, 'git clone https://github.com/apache/cordova-coho.git',BRANCH,'coho','git clone');
-trythis(path.join(TEST_DIR,'cordova-coho'),'npm install', BRANCH, 'npm', 'coho npm install');
+//trythis(TEST_DIR, 'git clone https://github.com/apache/cordova-coho.git',BRANCH,'coho','git clone');
+//trythis(path.join(TEST_DIR,'cordova-coho'),'npm install', BRANCH, 'npm', 'coho npm install');
 
-trythis(TEST_DIR,'./cordova-coho/coho repo-clone -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
-if(TEST_OK) {
-  success('coho',BRANCH,'repo clone','ok');
-}
-trythis(TEST_DIR,'./cordova-coho/coho repo-update -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
-if(TEST_OK) {
-  success('coho',BRANCH,'repo update','ok');
-}
-trythis(path.join(TEST_DIR,'cordova-cli'), 'npm install',BRANCH,'cli','cli npm install');
+//trythis(TEST_DIR,'./cordova-coho/coho repo-clone -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
+//if(TEST_OK) {
+//  success('coho',BRANCH,'repo clone','ok');
+//}
+//trythis(TEST_DIR,'./cordova-coho/coho repo-update -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
+//if(TEST_OK) {
+//  success('coho',BRANCH,'repo update','ok');
+//}
+//trythis(path.join(TEST_DIR,'cordova-cli'), 'npm install',BRANCH,'cli','cli npm install');
 
-trythis(TEST_DIR,'./cordova-cli/bin/cordova create mobilespec org.apache.mobilespec mobilespec',BRANCH,'Cli','Create Mobilespec');
+//trythis(TEST_DIR,'./cordova-cli/bin/cordova create mobilespec org.apache.mobilespec mobilespec',BRANCH,'Cli','Create Mobilespec');
 if(TEST_OK) {
   writefile(path.join(MSPEC_DIR,'.cordova','config.json'),
 '{\
