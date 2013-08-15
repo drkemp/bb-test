@@ -196,17 +196,17 @@ if(TEST_OK && build_android) {
        shell.echo('Android test prepare failed')
     });
 
-    trythis(MSPEC_DIR, '../cordova-cli/bin/cordova compile android',BRANCH,'Cli','build android');
-    trythis(MSPEC_DIR, './platforms/android/cordova/run --device',BRANCH,'Cli','deploy android');
+    //trythis(MSPEC_DIR, '../cordova-cli/bin/cordova compile android',BRANCH,'Cli','build android');
+    //trythis(MSPEC_DIR, './platforms/android/cordova/run --device',BRANCH,'Cli','deploy android');
 }
 if(TEST_OK && build_ios) {
     var output_location = path.join(MSPEC_DIR,'platforms','ios');
     ios(output_location, BRANCH,'', config.app.entry, config.couchdb.host, function(err){
        shell.echo('iOS test prepare failed')
     });
-     trythis(MSPEC_DIR, '../cordova-cli/bin/cordova compile ios', BRANCH,'Cli','build ios');
+     //trythis(MSPEC_DIR, '../cordova-cli/bin/cordova compile ios', BRANCH,'Cli','build ios');
      //trythis(MSPEC_DIR, './platforms/ios/cordova/run --device',BRANCH,'Cli','deploy ios');
-     trythis(MSPEC_DIR, './platforms/ios/cordova/run --target ipad',BRANCH,'Cli','deploy ios');
+     //trythis(MSPEC_DIR, './platforms/ios/cordova/run --target ipad',BRANCH,'Cli','deploy ios');
 }
 
 if(TEST_OK){

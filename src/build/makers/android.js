@@ -3,6 +3,7 @@ var shell        = require('shelljs'),
     error_writer = require('./error_writer'),
     n            = require('ncallbacks'),
     deploy       = require('./android/deploy'),
+    scan         = require('./android/devices'),
     fs           = require('fs'),
     mspec        = require('./mobile_spec');
 
@@ -49,6 +50,7 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
                     log('Compiling.');
                     var ant = 'cd ' + output + ' && ant clean && ant debug';
                     shell.exec(ant, {silent:true,async:true},function(code, compile_output) {
+                        log('Compile exit:'+code);
                         if (code > 0) {
                             error_writer('android', sha, 'Compilation error', compile_output);
                             callback(true);
@@ -57,6 +59,7 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
                             var package = 'org.apache.cordova.example';
                             if (devices) {
                                 // already have a specific set of devices to deploy to
+                                log('deploying to provided devices:'+devices);
                                 deploy(sha, devices, binary_path, package, callback);
                             } else {
                                 // get list of connected devices
@@ -67,6 +70,7 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
                                         log(error_message);
                                         callback(true);
                                     } else {
+                                        log('deploying to discovered devices:'+devices);
                                         deploy(sha, devices, binary_path, package, callback);
                                     }
                                 });
