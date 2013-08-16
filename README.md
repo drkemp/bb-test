@@ -4,6 +4,15 @@
 > Tools for Automated Testing of Cordova
 
 #Installation
+- get [couchdb] (http://couchdb.apache.org/) 1.3.1 
+  - Install couch db
+  - Edit the local.ini to accept request from external host.
+      bind_address = 0.0.0.0
+  - Setup database:
+      Create two databases
+        - build_errors
+        -  mobilespec_results
+
 - get [buildbot] (http://buildbot.net) version 0.8.7p1
 - install buildbot using the buildbot install/tutorial instructions
 - get the sample running
@@ -35,3 +44,6 @@
 The buildbot master describes the steps to run for tests and which slaves those test should run on. 
 Slaves can have limits imposed, so slaves that run tests on devices can only run one test at a time.
 The common slave can run multiple tests at once.
+
+
+
