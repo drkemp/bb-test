@@ -26,15 +26,6 @@ module.exports = function(output,lib_location, sha, devices, entry_point, couchd
             error_writer('ios', sha, 'Could not unlock keychain.', security.output);
             callback(true);
         } else {
-            // create an ios app into output dir
-//            log('./bin/create\'ing.');
-//            cmd = path.join(lib_location,"bin","create");
-//            shell.exec(cmd + ' ' + output + ' org.apache.cordova.example cordovaExample', {silent:true, async:true}, function(code, ootput) {
-//                if (code > 0) {
-//                    log('create failed');
-//                    error_writer('ios', sha, './bin/create error', ootput);
-//                    callback(true);
- //               } else {
                     log('starting iOS prepare');
                     try {
                         var projectWww = path.join(output, 'www');
@@ -81,8 +72,6 @@ module.exports = function(output,lib_location, sha, devices, entry_point, couchd
                                 }
                             });
                     }
- //               }
-            });
         }
     }
 }
