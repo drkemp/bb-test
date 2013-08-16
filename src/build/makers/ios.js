@@ -37,7 +37,7 @@ module.exports = function(output,lib_location, sha, devices, entry_point, couchd
                         }
 
                         //  modify config.xml
-                        var configFile = path.join(output, 'cordovaExample', 'config.xml');
+                        var configFile = path.join(output, 'mobilespec', 'config.xml');
                         fs.writeFileSync(configFile, fs.readFileSync(configFile, 'utf-8').replace(/<content\s*src=".*"/gi, '<content src="'+entry_point+'"'), 'utf-8');
                         // make sure the couch db server is whitelisted
                         fs.writeFileSync(configFile, fs.readFileSync(configFile, 'utf-8').replace(/<access origin="http:..audio.ibeat.org" *.>/gi,'<access origin="http://audio.ibeat.org" /><access origin="'+couchdb_host+'" />', 'utf-8'));
