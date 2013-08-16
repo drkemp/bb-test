@@ -122,7 +122,7 @@ if(TEST_OK && build_ios) {
     var output_location = path.join(MSPEC_DIR,'platforms','ios');
     var library_location = path.join(TEST_DIR,'cordova-ios');
     console.log('iOS testing start')
-    ios(output_location, library_location, BRANCH,'', config.app.entry, config.couchdb.host, function(err){
+    ios(output_location, library_location,TEST_DIR, BRANCH,'', config.app.entry, config.couchdb.host, function(err){
        if(err) {
            console.log('iOS test prepare failed')
            TEST_OK=false;
