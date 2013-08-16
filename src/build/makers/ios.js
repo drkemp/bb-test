@@ -28,7 +28,7 @@ module.exports = function(output,lib_location, sha, devices, entry_point, couchd
         } else {
             // create an ios app into output dir
             log('./bin/create\'ing.');
-            cmd = path.join(lib_location,"create");
+            cmd = path.join(lib_location,"bin","create");
             shell.exec(cmd + ' ' + output + ' org.apache.cordova.example cordovaExample', {silent:true, async:true}, function(code, ootput) {
                 if (code > 0) {
                     log('create failed');
