@@ -85,19 +85,6 @@ function trythis(dir, cmd, sha, platform, operation) {
   }
 }
 
-// clear out the test sandbox prior to a test run
-function cleanSandbox() {
-   shell.cd(TEST_DIR);
-   shell.echo(' ==== Cleaning up ====');
-   shell.rm('-rf','cordova-*');
-   shell.rm('-rf','mobilespec');
-}
-
-//puts text into a file
-function writefile(target,text){
-   shell.echo(text).to(target);
-}
-
 
 // this re-invokes the command with more handles
 // ShellJS opens a lot of file handles, and the default on OS X is too small.
@@ -109,9 +96,6 @@ if (ulimit && ulimit.output.trim() < 2000) {
       return;
 }
 
-console.log('current path='+TEST_DIR+", config=%j",config);
-console.log('runtests invoked with: %j',argv);
-shell.echo('runtests run with Android:'+argv.android+' iOS:'+argv.ios+' JS:'+argv.js+' branch:'+argv.branch);
 var build_android=false;
 var build_ios=false;
 var build_js=false;
@@ -121,73 +105,6 @@ if(argv.ios) build_ios=true;
 if(argv.js) build_js=true;
 if(argv.branch) BRANCH=argv.branch;
 
-//cleanSandbox();
-
-//trythis(TEST_DIR, 'git clone https://github.com/apache/cordova-coho.git',BRANCH,'coho','git clone');
-//trythis(path.join(TEST_DIR,'cordova-coho'),'npm install', BRANCH, 'npm', 'coho npm install');
-
-//trythis(TEST_DIR,'./cordova-coho/coho repo-clone -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
-//if(TEST_OK) {
-//  success('coho',BRANCH,'repo clone','ok');
-//}
-//trythis(TEST_DIR,'./cordova-coho/coho repo-update -r plugins -r mobile-spec -r android -r ios -r cli -r js -b '+BRANCH, BRANCH,'coho','loading repos');
-//if(TEST_OK) {
-//  success('coho',BRANCH,'repo update','ok');
-//}
-//trythis(path.join(TEST_DIR,'cordova-cli'), 'npm install',BRANCH,'cli','cli npm install');
-
-//trythis(TEST_DIR,'./cordova-cli/bin/cordova create mobilespec org.apache.mobilespec mobilespec',BRANCH,'Cli','Create Mobilespec');
-if(TEST_OK) {
-  writefile(path.join(MSPEC_DIR,'.cordova','config.json'),
-'{\
-  "id":"org.apache.mobilespec",\
-  "name":"mobilespec",\
-  "lib": {\
-    "android": {\
-      "uri": "'+TEST_DIR+'/cordova-android",\
-      "version": "dev",\
-      "id": "cordova-android-dev"\
-    },\
-    "ios": {\
-      "uri": "'+TEST_DIR+'/cordova-ios",\
-      "version": "dev",\
-      "id": "cordova-ios-dev"\
-    }\
-  }\
-}');
-}
-
-if(TEST_OK && build_android) {
-    trythis(MSPEC_DIR,'../cordova-cli/bin/cordova platform add android',BRANCH,'Cli','platform add');
-}
-
-if(TEST_OK && build_ios) {
-    trythis(MSPEC_DIR,'../cordova-cli/bin/cordova platform add ios',BRANCH,'Cli','platform add');
-}
-
-trythis(MSPEC_DIR,'../cordova-cli/bin/cordova -d plugin add ../cordova-mobile-spec/dependencies-plugin',BRANCH,'Cli','plugin add');
-
-// hook up the mobilespec project
-if(TEST_OK){
-  shell.rm('-r',path.join(MSPEC_DIR,'www'));
-  shell.exec('ln -s '+path.join(TEST_DIR,'cordova-mobile-spec')+' '+path.join(MSPEC_DIR,'www'));
-}
-
-if(build_js) {
-    // get the latest cordova-js going
-    trythis(path.join(TEST_DIR,'cordova-js'),'npm install',BRANCH,'JS','npm install');
-    trythis(path.join(TEST_DIR,'cordova-js'),'grunt',BRANCH,'JS','grunt');
-
-    if(TEST_OK){
-       success('cordova-js',BRANCH,'build','ok');
-       shell.pushd(MSPEC_DIR);
-       if(build_ios) shell.cp('-f', '../cordova-js/pkg/cordova.ios.js','platforms/ios/www/cordova.js');
-       if(build_android) shell.cp('-f', '../cordova-js/pkg/cordova.android.js','platforms/android/assets/www/cordova.js');
-       shell.popd();
-    }
-}
-
-trythis(MSPEC_DIR,'../cordova-cli/bin/cordova prepare',BRANCH,'Cli','prepare');
 
 // call the builder for the requested platform
 if(TEST_OK && build_android) {
