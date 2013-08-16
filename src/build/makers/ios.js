@@ -10,7 +10,7 @@ var keychain_location = config.ios.keychainLocation;
 var keychain_password = config.ios.keychainPassword;
 
 
-module.exports = function(output,lib_location, sha, devices, entry_point, couchdb_host, callback) {
+module.exports = function(output,lib_location,test_dir, sha, devices, entry_point, couchdb_host, callback) {
     function log(msg) {
         console.log('[IOS] ' + msg + ' (sha: ' + sha.substr(0,7) + ')');
     }
@@ -62,7 +62,7 @@ module.exports = function(output,lib_location, sha, devices, entry_point, couchd
                             callback(true);
                     } else {
                             // get list of connected devices
-                            scan(function(err, devices) {
+                            scan(test_dir, function(err, devices) {
                                 if (err) {
                                     error_writer('ios', sha, devices, 'No further details dude.');
                                     callback(true);
