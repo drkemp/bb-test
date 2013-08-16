@@ -1,6 +1,7 @@
 var shell        = require('shelljs'),
     path         = require('path'),
     deploy       = require('./ios/deploy'),
+    scan         = require('./ios/devices'),
     error_writer = require('./error_writer'),
     config       = require('../../../config'),
     fs           = require('fs');
