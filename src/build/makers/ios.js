@@ -9,7 +9,7 @@ var keychain_location = config.ios.keychainLocation;
 var keychain_password = config.ios.keychainPassword;
 
 
-module.exports = function(output, sha, devices, entry_point, couchdb_host, callback) {
+module.exports = function(output,lib_location, sha, devices, entry_point, couchdb_host, callback) {
     function log(msg) {
         console.log('[IOS] ' + msg + ' (sha: ' + sha.substr(0,7) + ')');
     }
@@ -28,7 +28,8 @@ module.exports = function(output, sha, devices, entry_point, couchdb_host, callb
         } else {
             // create an ios app into output dir
             log('./bin/create\'ing.');
-            shell.exec(create + ' ' + output + ' org.apache.cordova.example cordovaExample', {silent:true, async:true}, function(code, ootput) {
+            cmd = path.join(lib_location,"create");
+            shell.exec(cmd + ' ' + output + ' org.apache.cordova.example cordovaExample', {silent:true, async:true}, function(code, ootput) {
                 if (code > 0) {
                     log('create failed');
                     error_writer('ios', sha, './bin/create error', ootput);
