@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 var shell = require('shelljs');
+var path= require('path');
 
 module.exports = function scan(test_dir, callback) {
     var cmd=path.join(test_dir,"node_modules","fruitstrap","listdevices");
