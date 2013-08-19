@@ -81,7 +81,7 @@ module.exports = function(output,lib_location,test_dir, sha, devices, entry_poin
                             });
                     }
                }
-           }
+           });
         }
     }
 }
