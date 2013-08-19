@@ -27,7 +27,14 @@ module.exports = function(output,lib_location,test_dir, sha, devices, entry_poin
             error_writer('ios', sha, 'Could not unlock keychain.', security.output);
             callback(true);
         } else {
-                    log('starting iOS prepare');
+          log('starting iOS prepare');
+          var mspec_out = path.join(output, 'assets', 'www');
+          log('Modifying Cordova Mobilespec application at:'+mspec_out);
+          mspec(mspec_out,sha,devices,entry_point, function(err){
+              if(err) {
+                  error_writer('ios', sha, 'Error  modifying mobile spec application.', '');
+                  callback(true);
+              } else {
                     try {
                         var projectWww = path.join(output, 'www');
                         // drop the iOS library SHA into the junit reporter
@@ -73,6 +80,8 @@ module.exports = function(output,lib_location,test_dir, sha, devices, entry_poin
                                 }
                             });
                     }
+               }
+           }
         }
     }
 }
