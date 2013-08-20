@@ -29,7 +29,7 @@ module.exports = function(output,lib_location,test_dir, sha, devices, entry_poin
             callback(true);
         } else {
           log('starting iOS prepare');
-          var mspec_out = path.join(output, 'assets', 'www');
+          var mspec_out = path.join(output, 'www');
           log('Modifying Cordova Mobilespec application at:'+mspec_out);
           mspec(mspec_out,sha,devices,entry_point, function(err){
               if(err) {
