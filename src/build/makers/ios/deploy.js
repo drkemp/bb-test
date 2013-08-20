@@ -23,6 +23,7 @@ var root = path.join(__dirname, '..', '..', '..', '..');
 var fruitstrap = path.join(root, 'node_modules', 'fruitstrap', 'fruitstrap');
 // current fruitstrap dependency has two binaries, uninstall exists under the "listdevices" one
 var listdevices = path.join(root, 'node_modules', 'fruitstrap', 'listdevices');
+var failures=false;
 
 function kill(process, buf, sha, device_id) {
     if (buf.indexOf('>>> DONE <<<') > -1) {
@@ -32,6 +33,7 @@ function kill(process, buf, sha, device_id) {
         // Deployment failed.
         error_writer('ios', sha, 'unknown', device_id, 'Deployment failed.', 'AMDeviceInstallApplication failed');
         process.kill();
+        failures=true;
         return true;
     }
     return false;
@@ -77,7 +79,7 @@ function run_through(sha, devices, bundlePath, bundleId, callback) {
             });
         });
     } else {
-        callback();
+        callback(failures);
     }
 }
 
@@ -91,7 +93,7 @@ module.exports = function deploy(sha, devices, bundlePath, bundleId, callback) {
         run_through(sha, devices, bundlePath, bundleId, callback);
     } else {
         log('No iOS devices detected.');
-        callback();
+        callback(true);
     }
 };
 
