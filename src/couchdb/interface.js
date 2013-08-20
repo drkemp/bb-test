@@ -128,7 +128,7 @@ db.prototype = {
 
 module.exports = {
     build_errors:new db('build_errors'),
-    mobilespec_results:new db('mobilespec_results')
+    mobilespec_results:new db('mobilespec_results'),
     test_details:new db('test_details')
 };
 

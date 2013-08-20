@@ -1,6 +1,6 @@
 var path = require ('path');
 var shell = require('shelljs');
-var buildinfo = require(./'buildinfo');
+var buildinfo = require('./buildinfo');
 var config = require('./config');
 var ios  = require('./src/build/makers/ios');
 var argv = require('optimist').argv;
@@ -18,7 +18,7 @@ var TEST_OK=true;
 
 if(argv.branch) BRANCH=argv.branch;
 
-buildinfo.saveBuildInfo(platform, BRANCH, function (error, sha ) {
+buildinfo('ios', BRANCH, function (error, sha ) {
     if(error) {
                TEST_OK=false;
     } else {
@@ -29,7 +29,8 @@ buildinfo.saveBuildInfo(platform, BRANCH, function (error, sha ) {
            } else {
                console.log('iOS tests complete')
            }
-    });
+       });
+    }
 });
 
 process.once('exit', function () {
