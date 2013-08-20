@@ -9,9 +9,10 @@
   - Edit the local.ini to accept request from external host.
       bind_address = 0.0.0.0
   - Setup database:
-      Create two databases
+      Create three databases
         - build_errors
-        -  mobilespec_results
+        - mobilespec_results
+        - test_details
 
 - get [buildbot] (http://buildbot.net) version 0.8.7p1
 - install buildbot using the buildbot install/tutorial instructions
