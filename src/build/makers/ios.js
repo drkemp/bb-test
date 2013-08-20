@@ -5,6 +5,7 @@ var shell        = require('shelljs'),
     error_writer = require('./error_writer'),
     config       = require('../../../config'),
     fs           = require('fs');
+    mspec        = require('./mobile_spec');
 
 var keychain_location = config.ios.keychainLocation;
 var keychain_password = config.ios.keychainPassword;
