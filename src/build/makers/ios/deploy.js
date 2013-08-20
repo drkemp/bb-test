@@ -29,7 +29,7 @@ function kill(process, buf, sha, device_id) {
     if (buf.indexOf('>>> DONE <<<') > -1) {
         process.kill();
         return true;
-    } else if (buf.indexOf('AMDeviceInstallApplication failed') > -1) {
+    } else if ((buf.indexOf('Assertion failed: (AMDeviceStartService') > -1) || (buf.indexOf('AMDeviceInstallApplication failed') > -1)) {
         // Deployment failed.
         error_writer('ios', sha, 'unknown', device_id, 'Deployment failed.', 'AMDeviceInstallApplication failed');
         process.kill();
@@ -57,6 +57,7 @@ function run_through(sha, devices, bundlePath, bundleId, callback) {
             // set up a timeout in case mobile-spec doesnt deploy or run
             var timer = setTimeout(function() {
                 fruit.kill();
+                failures=true;
                 log('Mobile-spec timed out on ' + d + ', continuing.');
                 // TODO: write out an error if it times out
                 run_through(sha, devices, bundlePath, bundleId, callback);

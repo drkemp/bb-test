@@ -15,7 +15,8 @@
             "git":"https://git-wip-us.apache.org/repos/asf/cordova-mobile-spec.git"
         },
         "entry":"autotest/pages/all.html",
-        "platforms":"android ios"
+        "platforms":"android ios",
+        "release":"3.0.0"
     },
     "blackberry":{
         "devices":{
